@@ -8,5 +8,5 @@ package com.bayviewglen.vo;
  *
  */
 public class Character {
-
+	public String classType;
 }
