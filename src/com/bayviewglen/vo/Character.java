@@ -9,4 +9,6 @@ package com.bayviewglen.vo;
  */
 public class Character {
 
+	public int hp = 100;
+	public String name;
 }
