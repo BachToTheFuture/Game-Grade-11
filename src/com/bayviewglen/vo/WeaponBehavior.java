@@ -4,9 +4,9 @@
 package com.bayviewglen.vo;
 
 /**
- * @author kdeslauriers
+ * @author bivanovic
  *
  */
-public class Room {
+public interface WeaponBehavior {
 
 }
