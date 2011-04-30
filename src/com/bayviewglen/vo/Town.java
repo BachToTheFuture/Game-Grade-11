@@ -4,15 +4,13 @@
 package com.bayviewglen.vo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author kdeslauriers
  *
  */
-public class Room {
-	ArrayList<Item> items;
+public class Town {
+	ArrayList<Building> buildings;
 	ArrayList<Character> characters;
-	
-	HashMap<String, Room> exits;
+	ArrayList<Item> items;
 }

@@ -7,6 +7,6 @@ package com.bayviewglen.vo;
  * @author kdeslauriers
  *
  */
-public abstract class Character {
-	
+public class Jewellery extends Item implements Wearable, Valuable {
+
 }

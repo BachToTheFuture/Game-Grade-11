@@ -7,6 +7,6 @@ package com.bayviewglen.vo;
  * @author kdeslauriers
  *
  */
-public abstract class Character {
-	
+public interface Wearable {
+
 }
