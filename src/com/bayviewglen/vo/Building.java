@@ -3,13 +3,14 @@
  */
 package com.bayviewglen.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author kdeslauriers
  *
  */
-public class Building {
+public class Building implements Serializable{
 	ArrayList<Room> rooms;
 
 	// When you enter a house, you will automatically enter into the front entrance room.

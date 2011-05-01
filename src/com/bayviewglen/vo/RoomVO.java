@@ -1,6 +1,8 @@
 
 package com.bayviewglen.vo;
 
-public class RoomVO {
+import java.io.Serializable;
+
+public class RoomVO implements Serializable{
   int i=0;
 }
