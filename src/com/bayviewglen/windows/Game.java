@@ -3,8 +3,15 @@
  */
 package com.bayviewglen.windows;
 
+import java.applet.Applet;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -21,6 +28,8 @@ import com.bayviewglen.vo.Town;
 public class Game {
 
 	private ArrayList<Town> villages;
+	private ListenerForKeys lfk = new ListenerForKeys();
+	private ListenerForMouse lfm = new ListenerForMouse();
 	
 	/**
 	 * @param args
@@ -39,6 +48,8 @@ public class Game {
 		
 		initGameMenu(frame);
 		
+		frame.addKeyListener(lfk);
+		frame.addMouseListener(lfm);
 		frame.setVisible(true);
 
 	}
@@ -89,6 +100,52 @@ public class Game {
 		help.add(menuItem);
 		
 		frame.setJMenuBar(menuBar);
+	}
+	
+	private class ListenerForKeys implements KeyListener
+	{
+		public void keyPressed(KeyEvent e)
+		{
+			System.out.println("Key Pressed: " + e.getKeyCode());
+			System.out.println(e.getModifiersEx());
+			System.out.println(e.isShiftDown());
+		}
+
+		public void keyReleased(KeyEvent e)
+		{
+
+		}
+
+		public void keyTyped (KeyEvent e)
+		{
+
+		}
+
+	}
+	
+	private class ListenerForMouse implements MouseListener
+	{
+
+		public void mouseClicked(MouseEvent e) {
+			System.out.println("Mouse was pressed on " + e.getComponent().getName());
+		}
+
+		public void mousePressed(MouseEvent e) {
+			
+		}
+
+		public void mouseReleased(MouseEvent e) {
+			
+		}
+
+		public void mouseEntered(MouseEvent e) {
+			
+		}
+
+		public void mouseExited(MouseEvent e) {
+			
+		}
+
 	}
 	
 }
