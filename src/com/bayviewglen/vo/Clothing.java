@@ -11,4 +11,5 @@ import java.io.Serializable;
  */
 public class Clothing extends Item implements Wearable, Valuable, Serializable {
 
+	int blah;
 }
