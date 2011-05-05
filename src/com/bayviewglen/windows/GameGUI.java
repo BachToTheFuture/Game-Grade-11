@@ -19,7 +19,9 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,6 +30,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -35,6 +38,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.bayviewglen.vo.Game;
 import com.bayviewglen.vo.Town;
@@ -47,11 +51,11 @@ import com.bayviewglen.vo.Town;
 public class GameGUI implements ActionListener, KeyListener, MouseListener, Serializable{
 
 	private Game game;
-	private JMenuBar menuBar;
-	private JMenu gameMenu, commandMenu, helpMenu;
-	private JMenuItem[] gameMenuItems = new JMenuItem[4];
-	private JMenuItem[] cmdMenuItems = new JMenuItem[4];
-	private JMenuItem[] helpMenuItems = new JMenuItem[2];
+	private static JMenuBar menuBar;
+	private static JMenu gameMenu, commandMenu, helpMenu;
+	private static JMenuItem[] gameMenuItems = new JMenuItem[4];
+	private static JMenuItem[] cmdMenuItems = new JMenuItem[4];
+	private static JMenuItem[] helpMenuItems = new JMenuItem[2];
 
 	private final static int MENU_NEW = 0;
 	private final static int MENU_LOAD = 1;
@@ -143,39 +147,67 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	}
 
 	public static void save(Game game){
-		String filename = "test.sav";
+		JFileChooser fileopen = new JFileChooser("C:/ICS3U Save Files");
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
+	    fileopen.addChoosableFileFilter(filter);
+
+	    int ret = fileopen.showDialog(null, "Save");
+
+	    File file = new File("");
+	    if (ret == JFileChooser.APPROVE_OPTION) {
+	    	file = new File(fileopen.getSelectedFile().getAbsolutePath());
+	    	
+	    	if(file.getName().indexOf('.') > 0){
+	    		file = new File(fileopen.getSelectedFile().getAbsolutePath().substring(0, file.getAbsolutePath().indexOf('.')));
+	   
+	    	}
+	    }
+		
+	    file = new File(file.getAbsolutePath() + ".sav");
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try
 		{
-			fos = new FileOutputStream(filename);
+			fos = new FileOutputStream(file);
 			out = new ObjectOutputStream(fos);
 			out.writeObject(game);
 			out.close();
+			System.out.println("Successfully Saved!");
 		}
-		catch(IOException ex)
+		catch(FileNotFoundException ex)
 		{
-			ex.printStackTrace();
+			System.out.println("File not found!");
+		} 
+		catch (IOException e) {
+			System.out.println("There was an error saving to the file!");
 		}
-		System.out.println("Successfully Saved!");
 	}
 
 	public static Game load(){
-		String filename = "test.sav";
+		JFileChooser fileopen = new JFileChooser("C:/");
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
+	    fileopen.addChoosableFileFilter(filter);
 
-		Game game = null;
+	    int ret = fileopen.showDialog(null, "Load");
+
+	    String filename = "";
+	    if (ret == JFileChooser.APPROVE_OPTION) {
+	    	filename = fileopen.getSelectedFile().getAbsolutePath();
+	    }
+	
+	    Game game = null;
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
-		if(!(new File(filename)).exists()){
-			System.err.println("There is no file with the name " + filename + "!");
-			return null;
-		}
+		
 		try
 		{
 			fis = new FileInputStream(filename);
 			in = new ObjectInputStream(fis);
 			game = (Game)in.readObject();
 			in.close();
+			System.out.println("Loaded Successfully!");
+			commandMenu.setEnabled(true);
+			gameMenuItems[MENU_SAVE].setEnabled(true);
 		}
 		catch(IOException ex)
 		{
@@ -185,8 +217,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		{
 			ex.printStackTrace();
 		}
-
-		System.out.println("Loaded Successfully!");
 		return game;
 	}
 
@@ -239,10 +269,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		else if("Load".equalsIgnoreCase(e.getActionCommand())){
 			if(game != null)
 				System.out.println("Are you sure you want to stop this game? Any unsaved data will be lost!");
+			
 			game = load();
-
-			commandMenu.setEnabled(true);
-			gameMenuItems[MENU_SAVE].setEnabled(true);
 
 			System.out.println(game.getPlayerName() + " " + game.getPoints());
 		}
