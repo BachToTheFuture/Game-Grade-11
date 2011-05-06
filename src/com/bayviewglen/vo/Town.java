@@ -10,7 +10,11 @@ import java.util.ArrayList;
  * @author kdeslauriers
  *
  */
-public class Town implements Serializable{
+public class Town extends Space implements Serializable{
+	public Town(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
 	ArrayList<Building> buildings;
 	ArrayList<Character> characters;
 	ArrayList<Item> items;

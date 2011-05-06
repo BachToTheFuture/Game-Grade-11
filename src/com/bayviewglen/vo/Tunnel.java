@@ -9,7 +9,12 @@ import java.io.Serializable;
  * @author kdeslauriers
  *
  */
-public class Tunnel implements Serializable{
+public class Tunnel extends Space implements Serializable{
+
+	public Tunnel(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
 	// This will have two exits that are building.  Each Building has a room that contains a tunnel
 	// entrance.  This is the room that the player will be entering from a tunnel.
 

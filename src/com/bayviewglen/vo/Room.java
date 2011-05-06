@@ -11,9 +11,14 @@ import java.util.HashMap;
  * @author kdeslauriers
  *
  */
-public class Room implements Serializable{
+public class Room extends Space implements Serializable {
+	
+	public Room(int x, int y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
 	ArrayList<Item> items;
 	ArrayList<Character> characters;
-	
 	HashMap<String, Room> exits;
+	
 }

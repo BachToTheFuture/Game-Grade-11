@@ -10,7 +10,12 @@ import java.util.ArrayList;
  * @author kdeslauriers
  *
  */
-public class Building implements Serializable{
+public class Building extends Space implements Serializable{
+	public Building(int x, int y) {
+		super(0, 0);
+		// TODO Auto-generated constructor stub
+	}
+
 	ArrayList<Room> rooms;
 
 	// When you enter a house, you will automatically enter into the front entrance room.
