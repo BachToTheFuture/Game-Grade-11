@@ -275,8 +275,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 			commandMenu.setEnabled(true);
 			gameMenuItems[MENU_SAVE].setEnabled(true);
-
-			game.testInit("Boris", 125);
 		}
 
 		else if("Exit".equalsIgnoreCase(e.getActionCommand())){
