@@ -147,7 +147,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	}
 
 	public static void save(Game game){
-		JFileChooser fileopen = new JFileChooser("C:/ICS3U Save Files");
+		JFileChooser fileopen = new JFileChooser("Save Files");
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
 	    fileopen.addChoosableFileFilter(filter);
 
@@ -184,7 +184,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	}
 
 	public static Game load(){
-		JFileChooser fileopen = new JFileChooser("C:/");
+		JFileChooser fileopen = new JFileChooser("Save Files");
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
 	    fileopen.addChoosableFileFilter(filter);
 
@@ -209,14 +209,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 			commandMenu.setEnabled(true);
 			gameMenuItems[MENU_SAVE].setEnabled(true);
 		}
-		catch(IOException ex)
-		{
-			ex.printStackTrace();
-		}
-		catch(ClassNotFoundException ex)
-		{
-			ex.printStackTrace();
-		}
+		catch(IOException ex){}
+		catch(ClassNotFoundException ex){}
 		return game;
 	}
 
@@ -267,25 +261,20 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		}
 
 		else if("Load".equalsIgnoreCase(e.getActionCommand())){
-			if(game != null)
-				System.out.println("Are you sure you want to stop this game? Any unsaved data will be lost!");
+			if(game != null){
+				//If game is not <code>null</code>, ask the user if they are sure as any unsaved
+				//data will be lost.
+				System.out.println("Are you sure you want to load? Any unsaved data will be lost!");
+			}
 			
 			game = load();
-
-			System.out.println(game.getPlayerName() + " " + game.getPoints());
 		}
 
-		/**
-		 * If game is not <code>null</code>, ask the user if they are sure as any unsaved
-		 * data will be lost.
-		 */
 		else if("New Game".equalsIgnoreCase(e.getActionCommand())){
 			game = new Game();
 
 			commandMenu.setEnabled(true);
 			gameMenuItems[MENU_SAVE].setEnabled(true);
-
-			game.testInit("Boris", 125);
 		}
 
 		else if("Exit".equalsIgnoreCase(e.getActionCommand())){
