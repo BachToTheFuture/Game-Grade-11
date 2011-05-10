@@ -319,5 +319,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public static void main(String[] args) {
 		GameGUI frame = new GameGUI();
+			
 	}
 }

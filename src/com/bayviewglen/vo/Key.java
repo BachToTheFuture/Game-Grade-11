@@ -11,4 +11,9 @@ import java.io.Serializable;
  */
 public class Key extends Item implements Valuable, Serializable {
 
+	public Key(int width, int height) {
+		super(width, height);
+		// TODO Auto-generated constructor stub
+	}
+
 }

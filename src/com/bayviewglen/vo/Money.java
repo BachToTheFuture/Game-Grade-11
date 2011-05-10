@@ -11,4 +11,9 @@ import java.io.Serializable;
  */
 public class Money extends Item implements Valuable, Serializable{
 
+	public Money(int width, int height) {
+		super(width, height);
+		// TODO Auto-generated constructor stub
+	}
+
 }

@@ -9,4 +9,6 @@ package com.bayviewglen.vo;
  */
 public interface WeaponBehavior {
 
+	public void Attack();
+	
 }
