@@ -16,9 +16,6 @@ public abstract class Item implements Serializable{
 
 	/** The weight. */
 	int weight = 0;
-
-	
-	
 	
 /**
 	 * Gets the weight.
