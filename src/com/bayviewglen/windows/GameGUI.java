@@ -69,9 +69,10 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
+	private static JFrame frame;
 
 	private GameGUI(){
-		JFrame frame = new JFrame("Game Title");
+		frame = new JFrame("Game Title");
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize().getSize();
@@ -193,6 +194,20 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	    String filename = "";
 	    if (ret == JFileChooser.APPROVE_OPTION) {
 	    	filename = fileopen.getSelectedFile().getAbsolutePath();
+	    }
+	    
+	    if (!(filename.endsWith(".sav"))){
+	    	JDialog dialog = new JDialog();
+	    	final JOptionPane optionPane = new JOptionPane("Incorrect file extension!",
+	    		    JOptionPane.WARNING_MESSAGE,
+	    		    JOptionPane.OK_CANCEL_OPTION);
+	    	dialog.add(optionPane);
+	    	//make it so that it closes when OK or CANCEL are pressed
+	    	dialog.setBounds(400, 300, 100, 100);
+	    	dialog.pack();
+	    	dialog.setVisible(true);
+	    	frame.add(dialog);
+	    	return null;
 	    }
 	
 	    Game game = null;
