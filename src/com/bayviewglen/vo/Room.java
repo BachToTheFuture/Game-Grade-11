@@ -17,8 +17,6 @@ public class Room extends Space implements Serializable {
 		super(x, y);
 		// TODO Auto-generated constructor stub
 	}
-	ArrayList<Item> items;
-	ArrayList<Character> characters;
-	HashMap<String, Room> exits;
+
 	
 }
