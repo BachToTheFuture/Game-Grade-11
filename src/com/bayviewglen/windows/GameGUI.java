@@ -41,6 +41,7 @@ import javax.swing.event.MenuKeyListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.bayviewglen.vo.Game;
+import com.bayviewglen.vo.Inventory;
 import com.bayviewglen.vo.Town;
 
 /**
@@ -304,6 +305,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public static void main(String[] args) {
 		GameGUI frame = new GameGUI();
-			
+		Inventory i = new Inventory(); 	
 	}
 }
