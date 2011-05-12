@@ -106,5 +106,23 @@ abstract class Space implements Serializable{
 	public void NextSpace(String direction){
 		//Not implemented yet.
 	}
+		
+	/**
+	 * Gets the items.
+	 *
+	 * @return the items
+	 */
+	public ArrayList<Item> getItems(){
+		return items;
+	}
+
+	/**
+	 * Checks for items.
+	 *
+	 * @return true, if successful
+	 */
+	public boolean hasItems(){
+		return items.size()>0;
+	}
 
 }
