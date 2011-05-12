@@ -6,6 +6,7 @@ package com.bayviewglen.windows;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -28,6 +29,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -70,9 +72,11 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
-
+    
+	private JFrame frame;
+	
 	private GameGUI(){
-		JFrame frame = new JFrame("Game Title");
+		frame = new JFrame("Game Title");
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize().getSize();
@@ -220,7 +224,16 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		System.out.println("Key Pressed: " + e.getKeyCode());
 		System.out.println(e.getModifiersEx());
 		System.out.println(e.isShiftDown());
+		if (e.getKeyCode() == KeyEvent.VK_I){
+
+			Inventory i = new Inventory();
+			frame.setContentPane(i);
+			frame.setVisible(true);
+		}
+			
 	}
+
+
 
 	public void keyReleased(KeyEvent e)
 	{
@@ -305,6 +318,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public static void main(String[] args) {
 		GameGUI frame = new GameGUI();
-		Inventory i = new Inventory(); 	
+			
+		
 	}
 }
