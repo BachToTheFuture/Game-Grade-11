@@ -3,24 +3,15 @@
  */
 package com.bayviewglen.windows;
 
-import java.applet.Applet;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -28,23 +19,18 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Timer;
 
-import javax.swing.JDialog;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.bayviewglen.vo.Game;
 import com.bayviewglen.vo.Inventory;
-import com.bayviewglen.vo.Town;
 
 /**
  * @author kdeslauriers
@@ -72,9 +58,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
-    
-	private JFrame frame;
-	
+	private static JFrame frame;
+
 	private GameGUI(){
 		frame = new JFrame("Game Title");
 
@@ -168,6 +153,10 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	    	}
 	    }
 		
+		if (ret == JFileChooser.CANCEL_OPTION) {
+			return;
+		}
+
 	    file = new File(file.getAbsolutePath() + ".sav");
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
@@ -177,7 +166,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 			out = new ObjectOutputStream(fos);
 			out.writeObject(game);
 			out.close();
-			System.out.println("Successfully Saved!");
+			Object[] objects = {"Ok"};
+			JOptionPane.showOptionDialog(frame,	"Successfully Saved!", "Success!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, new ImageIcon("Icons/ok.png"), objects, objects[0]);
 		}
 		catch(FileNotFoundException ex)
 		{
@@ -200,6 +190,12 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	    	filename = fileopen.getSelectedFile().getAbsolutePath();
 	    }
 	
+		if (!(filename.endsWith(".sav"))){
+			Object[] options = {"Ok"};
+			JOptionPane.showOptionDialog(frame,	"Invalid file extension!", "Warning", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+			return null;
+		}
+
 	    Game game = null;
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
@@ -213,8 +209,14 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 			System.out.println("Loaded Successfully!");
 			commandMenu.setEnabled(true);
 			gameMenuItems[MENU_SAVE].setEnabled(true);
+			Object[] objects = {"Ok"};
+			JOptionPane.showOptionDialog(frame,	"Successfully Loaded!", "Success!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.DEFAULT_OPTION, new ImageIcon("Icons/ok.png"), objects, objects[0]);
+
 		}
-		catch(IOException ex){}
+		catch(IOException ex){
+			Object[] objects = {"Ok"};
+			JOptionPane.showOptionDialog(frame,	"Invalid File Contents", "Error", JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE, null, objects, objects[0]);
+		}
 		catch(ClassNotFoundException ex){}
 		return game;
 	}
@@ -276,9 +278,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 		else if("Load".equalsIgnoreCase(e.getActionCommand())){
 			if(game != null){
-				//If game is not <code>null</code>, ask the user if they are sure as any unsaved
+				//If game is not null, ask the user if they are sure as any unsaved
 				//data will be lost.
-				System.out.println("Are you sure you want to load? Any unsaved data will be lost!");
 			}
 			
 			game = load();
@@ -292,26 +293,15 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		}
 
 		else if("Exit".equalsIgnoreCase(e.getActionCommand())){
-			/*final JOptionPane optionPane = new JOptionPane("Are you sure you want to exit?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION);
-			final JDialog dialog = new JDialog();
-			optionPane.addPropertyChangeListener(
-					new PropertyChangeListener(){
-						public void propertyChange(PropertyChangeEvent e) {
-							String prop = e.getPropertyName();
+			Object[] options = {"Save and Exit", "Exit", "Cancel"};
+			int n = JOptionPane.showOptionDialog(frame,	"Are you sure you want to exit?\nAny unsaved data will be lost!", "", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
 
-							if (dialog.isVisible() && (e.getSource() == optionPane) && (prop.equalsIgnoreCase("value"))){
+			if(n == 0){
+				save(game);
 								System.exit(0);
 							}
 
-							else if ((dialog.isVisible() && (e.getSource() == optionPane) && (prop.equals(JOptionPane.VALUE_PROPERTY)))){
-								System.out.println(prop);
-								dialog.setVisible(false);
-							}
-						}
-					});
-			dialog.add(optionPane);
-			dialog.pack();
-			dialog.setVisible(true);*/
+			else if(n == 1)
 			System.exit(0);
 		}
 	}

@@ -33,10 +33,23 @@ abstract class Space implements Serializable{
 
 		if (i.getxPosition() > 0 && i.getxPosition() < xSize && 
 				i.getyPosition() > 0 && i.getyPosition() < ySize && 
-				isEmpty(x, y)){
+				isBoxEmpty(x, y, i.getxSize(), i.getySize())){
 			items.add(i);
 			return false;
+		} else {
+			items.add(i);
+			return true;
 		}
+	}
+	
+	/**
+	 * Removes any item that occupies the point specified.
+	 * @param x - the x-coordinate of the point to be checked.
+	 * @param y - the y-coordinate of the point to be checked.
+	 * @return true if an item is removed, false otherwise.
+	 */
+	public boolean removeItem(int x, int y){
+		//Not implemented yet.
 		return false;
 	}
 
@@ -46,7 +59,7 @@ abstract class Space implements Serializable{
 	 * @param y - the y-coordinate of the point to be checked.
 	 * @return true if there is nothing at that point in space, false otherwise.
 	 */
-	public boolean isEmpty(int x, int y){
+	public boolean isPointEmpty(int x, int y){
 		for (Item i : items){
 			if (i.getxPosition() <= x && x <= (i.getxPosition() + i.getxSize())){
 				return false;
@@ -78,12 +91,38 @@ abstract class Space implements Serializable{
 		} else {
 			for (int i = x; i < (x+width); i++){
 				for (int j = y; j < (y+height); i++){
-					if (!isEmpty(i, j))
+					if (!isPointEmpty(i, j))
 						return true;
 				}
 			}
 		}
 		return false;
+	}
+	
+	public void connect(Space i, Space j){
+		//Not implemented yet.
+	}
+	
+	public void NextSpace(String direction){
+		//Not implemented yet.
+	}
+		
+	/**
+	 * Gets the items.
+	 *
+	 * @return the items
+	 */
+	public ArrayList<Item> getItems(){
+		return items;
+	}
+
+	/**
+	 * Checks for items.
+	 *
+	 * @return true, if successful
+	 */
+	public boolean hasItems(){
+		return items.size()>0;
 	}
 
 }
