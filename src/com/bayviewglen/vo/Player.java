@@ -31,7 +31,7 @@ public class Player extends HumanControlledCharacter implements Serializable{
 
 	public Player(String playerName){
 		name = playerName;
-		ImageIcon i = new ImageIcon("images/sampleplayer.png");
+		ImageIcon i = new ImageIcon("images/sampleplayer.PNG");
 		still = i.getImage();
 		x = 10;
 		y = 10;

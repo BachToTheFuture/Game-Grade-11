@@ -3,23 +3,15 @@
  */
 package com.bayviewglen.windows;
 
-import java.applet.Applet;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,22 +19,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.event.MenuKeyEvent;
-import javax.swing.event.MenuKeyListener;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.bayviewglen.modules.SamplePanel;
 import com.bayviewglen.vo.Game;
-import com.bayviewglen.vo.Town;
 
 /**
  * @author kdeslauriers
@@ -71,7 +60,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
 	private static JFrame frame;
-
+	
 	private GameGUI(){
 		frame = new JFrame("Game Title");
 
@@ -236,9 +225,11 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public void keyPressed(KeyEvent e)
 	{
-		System.out.println("Key Pressed: " + e.getKeyCode());
-		System.out.println(e.getModifiersEx());
-		System.out.println(e.isShiftDown());
+		int key = e.getKeyCode();
+		
+		if (key == KeyEvent.VK_0){
+			frame.add(new SamplePanel());
+		}
 	}
 
 	public void keyReleased(KeyEvent e)
