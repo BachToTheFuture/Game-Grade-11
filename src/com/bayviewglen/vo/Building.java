@@ -11,7 +11,15 @@ import java.util.ArrayList;
  *
  */
 public class Building implements Serializable{
-	ArrayList<Room> rooms;
+	public Building(Room townEntrance, Room tunnelEntrance, Tunnel t, Room outside) {
+		rooms.set(0, townEntrance);
+		rooms.set(1, tunnelEntrance);
+		// TODO Auto-generated constructor stub
+	}
+
+	ArrayList<Room> rooms = new ArrayList<Room>(2);
+	//Index 0 Will always be the town entrance for the building.
+	//Index 1 Will always be the tunnel entrance.
 
 	// When you enter a house, you will automatically enter into the front entrance room.
 	Room frontEntrance;

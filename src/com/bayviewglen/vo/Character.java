@@ -66,5 +66,6 @@ public abstract class Character implements Serializable{
 		return w;
 	}
 	
+	
 }
 
