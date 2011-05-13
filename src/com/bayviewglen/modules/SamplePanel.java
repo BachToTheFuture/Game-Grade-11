@@ -59,7 +59,6 @@ public class SamplePanel extends JPanel implements ActionListener{
 		
 		public void keyPressed(KeyEvent e){
 			p.keyPressed(e);
-			System.out.println("hi");
 		}
 	}
 }
