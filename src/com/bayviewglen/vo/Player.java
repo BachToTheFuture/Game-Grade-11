@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 public class Player extends HumanControlledCharacter implements Serializable{
 	
 	private String name;
-	private int x, dx, y;
+	private int x, dx, y, dy;
 	private int hp = 100;
 	private int exp;
 	private Image still;
@@ -39,6 +39,7 @@ public class Player extends HumanControlledCharacter implements Serializable{
 	
 	public void move(){
 		x += dx;
+		y += dy;
 	}
 	
 	public int getX() {
@@ -72,6 +73,10 @@ public class Player extends HumanControlledCharacter implements Serializable{
 			dx = -1;
 		else if (key == KeyEvent.VK_RIGHT)
 			dx = 1;
+		else if (key == KeyEvent.VK_UP)
+			dy = -1;
+		else if (key == KeyEvent.VK_DOWN)
+			dy = 1;
 	}
 	
 	public void keyReleased(KeyEvent e){
@@ -81,5 +86,9 @@ public class Player extends HumanControlledCharacter implements Serializable{
 			dx = 0;
 		else if (key == KeyEvent.VK_RIGHT)
 			dx = 0;
+		else if (key == KeyEvent.VK_UP)
+			dy = 0;
+		else if (key == KeyEvent.VK_DOWN)
+			dy = 0;
 	}
 }

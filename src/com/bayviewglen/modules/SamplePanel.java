@@ -28,6 +28,7 @@ public class SamplePanel extends JPanel implements ActionListener{
 		p = new Player("Enter Player Name");
 		addKeyListener(new AL());
 		setFocusable(true);
+		setVisible(true);
 		ImageIcon i = new ImageIcon("images/samplebackground.PNG");
 		img = i.getImage();
 		time = new Timer(5, this);
@@ -47,6 +48,10 @@ public class SamplePanel extends JPanel implements ActionListener{
 			g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
 	}
 	
+	public void stop(){
+		time.stop();
+	}
+	
 	private class AL extends KeyAdapter{
 		public void keyReleased(KeyEvent e){
 			p.keyReleased(e);
@@ -54,6 +59,7 @@ public class SamplePanel extends JPanel implements ActionListener{
 		
 		public void keyPressed(KeyEvent e){
 			p.keyPressed(e);
+			System.out.println("hi");
 		}
 	}
 }

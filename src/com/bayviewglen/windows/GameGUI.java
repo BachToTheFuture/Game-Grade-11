@@ -27,6 +27,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.bayviewglen.modules.SamplePanel;
@@ -59,9 +60,11 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
 	private static JFrame frame;
-	
+	//private static SamplePanel sp;
+
 	private GameGUI(){
 		frame = new JFrame("Game Title");
+		//sp = new SamplePanel();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize().getSize();
@@ -71,6 +74,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 		frame.addKeyListener(this);
 		frame.addMouseListener(this);
+		//frame.add(sp);
 		frame.setVisible(true);
 	}
 
@@ -138,26 +142,26 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public static void save(Game game){
 		JFileChooser fileopen = new JFileChooser("Save Files");
-	    FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
-	    fileopen.addChoosableFileFilter(filter);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
+		fileopen.addChoosableFileFilter(filter);
 
-	    int ret = fileopen.showDialog(null, "Save");
+		int ret = fileopen.showDialog(null, "Save");
 
-	    File file = new File("");
-	    if (ret == JFileChooser.APPROVE_OPTION) {
-	    	file = new File(fileopen.getSelectedFile().getAbsolutePath());
-	    	
-	    	if(file.getName().indexOf('.') > 0){
-	    		file = new File(fileopen.getSelectedFile().getAbsolutePath().substring(0, file.getAbsolutePath().indexOf('.')));
-	   
-	    	}
-	    }
-		
+		File file = new File("");
+		if (ret == JFileChooser.APPROVE_OPTION) {
+			file = new File(fileopen.getSelectedFile().getAbsolutePath());
+
+			if(file.getName().indexOf('.') > 0){
+				file = new File(fileopen.getSelectedFile().getAbsolutePath().substring(0, file.getAbsolutePath().indexOf('.')));
+
+			}
+		}
+
 		if (ret == JFileChooser.CANCEL_OPTION) {
 			return;
 		}
 
-	    file = new File(file.getAbsolutePath() + ".sav");
+		file = new File(file.getAbsolutePath() + ".sav");
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try
@@ -180,26 +184,26 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public static Game load(){
 		JFileChooser fileopen = new JFileChooser("Save Files");
-	    FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
-	    fileopen.addChoosableFileFilter(filter);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Save Files (*.sav)", "sav");
+		fileopen.addChoosableFileFilter(filter);
 
-	    int ret = fileopen.showDialog(null, "Load");
+		int ret = fileopen.showDialog(null, "Load");
 
-	    String filename = "";
-	    if (ret == JFileChooser.APPROVE_OPTION) {
-	    	filename = fileopen.getSelectedFile().getAbsolutePath();
-	    }
-	
+		String filename = "";
+		if (ret == JFileChooser.APPROVE_OPTION) {
+			filename = fileopen.getSelectedFile().getAbsolutePath();
+		}
+
 		if (!(filename.endsWith(".sav"))){
 			Object[] options = {"Ok"};
 			JOptionPane.showOptionDialog(frame,	"Invalid file extension!", "Warning", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
 			return null;
 		}
 
-	    Game game = null;
+		Game game = null;
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
-		
+
 		try
 		{
 			fis = new FileInputStream(filename);
@@ -221,27 +225,29 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		return game;
 	}
 
-	public void keyPressed(KeyEvent e)
-	{
+	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		
+
 		if (key == KeyEvent.VK_0){
-			frame.add(new SamplePanel());
+			SamplePanel sp = new SamplePanel();
+			frame.getContentPane().add(sp);
+			
+			// If you do not include this then you will not be able perform input in the panel.
+			sp.requestFocusInWindow();
+			// You need this to be able to update the frame with the panel
+			frame.setVisible(true);
 		}
 	}
 
-	public void keyReleased(KeyEvent e)
-	{
+	public void keyReleased(KeyEvent e) {
 
 	}
 
-	public void keyTyped (KeyEvent e)
-	{
+	public void keyTyped (KeyEvent e) {
 
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Mouse was pressed on " + e.getComponent().getName());
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -261,8 +267,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("Mouse was pressed on " + e.getActionCommand());
-
 		if("Save".equalsIgnoreCase(e.getActionCommand())){
 			if(game == null)
 				return;
@@ -274,7 +278,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 				//If game is not null, ask the user if they are sure as any unsaved
 				//data will be lost.
 			}
-			
+
 			game = load();
 		}
 
@@ -291,17 +295,15 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 			if(n == 0){
 				save(game);
-								System.exit(0);
-							}
+				System.exit(0);
+			}
 
 			else if(n == 1)
-			System.exit(0);
+				System.exit(0);
 		}
 	}
 
 	public static void main(String[] args) {
 		GameGUI frame = new GameGUI();
-			
-		
 	}
 }
