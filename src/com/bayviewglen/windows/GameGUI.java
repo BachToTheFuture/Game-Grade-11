@@ -30,6 +30,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.bayviewglen.modules.Map;
 import com.bayviewglen.modules.SamplePanel;
 import com.bayviewglen.vo.Game;
 
@@ -60,11 +61,9 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
 	private static JFrame frame;
-	//private static SamplePanel sp;
 
 	private GameGUI(){
 		frame = new JFrame("Game Title");
-		//sp = new SamplePanel();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize().getSize();
@@ -74,7 +73,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 		frame.addKeyListener(this);
 		frame.addMouseListener(this);
-		//frame.add(sp);
 		frame.setVisible(true);
 	}
 
@@ -235,6 +233,14 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 			// If you do not include this then you will not be able perform input in the panel.
 			sp.requestFocusInWindow();
 			// You need this to be able to update the frame with the panel
+			frame.setVisible(true);
+		}
+		
+		else if (key == KeyEvent.VK_M){
+			Map map = new Map();
+			frame.getContentPane().add(map);
+			
+			map.requestFocusInWindow();
 			frame.setVisible(true);
 		}
 	}
