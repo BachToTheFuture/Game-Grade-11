@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -20,11 +21,14 @@ import com.bayviewglen.vo.Player;
  */
 public class SamplePanel extends JPanel implements ActionListener{
 
-	Player p;
-	Image img;
-	Timer time;
+	private Player p;
+	private Image img;
+	private Timer time;
+	private JFrame guiFrame;
 
-	public SamplePanel(){
+	public SamplePanel(JFrame frame){
+		guiFrame = frame;
+
 		p = new Player("Enter Player Name");
 		addKeyListener(new AL());
 		setFocusable(true);
@@ -39,25 +43,33 @@ public class SamplePanel extends JPanel implements ActionListener{
 		p.move();
 		repaint();
 	}
-	
+
 	public void paint(Graphics g){
 		super.paint(g);
-			Graphics2D g2d = (Graphics2D) g;
-			
-			g2d.drawImage(img, 0, 0, null);
-			g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
+		Graphics2D g2d = (Graphics2D) g;
+
+		g2d.drawImage(img, 0, 0, null);
+		g2d.drawImage(p.getImage(), p.getX(), p.getY(), null);
 	}
-	
-	public void stop(){
-		time.stop();
+
+	public void close(){
+		setVisible(false);
+		
+		guiFrame.getContentPane().remove(this);
+		guiFrame.requestFocusInWindow();
 	}
-	
+
 	private class AL extends KeyAdapter{
 		public void keyReleased(KeyEvent e){
 			p.keyReleased(e);
 		}
-		
+
 		public void keyPressed(KeyEvent e){
+			int key = e.getKeyCode();
+
+			if(key == KeyEvent.VK_0){
+				close();
+			}
 			p.keyPressed(e);
 		}
 	}

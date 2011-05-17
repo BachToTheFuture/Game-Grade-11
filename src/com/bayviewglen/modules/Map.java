@@ -6,24 +6,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Map extends JPanel implements ActionListener{
-	
-	ArrayList<String> cityName = new ArrayList<String>();
-	File cityNames = new File("City Names.txt");
-	Image img;
-	Timer time;
-	
-	public Map(){
+public class Map extends JPanel implements ActionListener, Serializable{
+
+	private ArrayList<String> cityName = new ArrayList<String>();
+	private File cityNames = new File("City Names.txt");
+	private Image img;
+	private Timer time;
+	private JFrame guiFrame;
+
+	public Map(JFrame frame){
+		guiFrame = frame;
+		
 		setFocusable(true);
 		addKeyListener(new AL());
-		setFocusable(true);
 		ImageIcon i = new ImageIcon("Tech Game Map.JPG");
 		img = i.getImage();
 		setVisible(true);
@@ -34,21 +38,31 @@ public class Map extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
-	
+
 	public void paint(Graphics g){
 		super.paint(g);
-			Graphics2D g2d = (Graphics2D) g;
-			
-			g2d.drawImage(img, 0, 0, null);
+		Graphics2D g2d = (Graphics2D) g;
+
+		g2d.drawImage(img, 0, 0, null);
 	}
-	
-	public void stop(){
-		time.stop();
+
+	public void close(){
+		setVisible(false);
+		guiFrame.getContentPane().remove(this);
+		guiFrame.requestFocusInWindow();
 	}
 	
 	private class AL extends KeyAdapter{
-		public void keyReleased(KeyEvent e){}
-		
-		public void keyPressed(KeyEvent e){}
+		public void keyReleased(KeyEvent e){
+
+		}
+
+		public void keyPressed(KeyEvent e){
+			int key = e.getKeyCode();
+			System.out.println("Map Captured Key Strokes");
+			if (key == KeyEvent.VK_M){
+				close();
+			}
+		}
 	}
 }

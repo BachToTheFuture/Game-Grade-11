@@ -225,9 +225,11 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
+		System.out.println("GAMEGUI Captured Key Strokes");
 
 		if (key == KeyEvent.VK_0){
-			SamplePanel sp = new SamplePanel();
+			System.out.println("Amount of Components: " + frame.getComponentCount());
+			SamplePanel sp = new SamplePanel(frame);
 			frame.getContentPane().add(sp);
 			
 			// If you do not include this then you will not be able perform input in the panel.
@@ -237,9 +239,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		}
 		
 		else if (key == KeyEvent.VK_M){
-			Map map = new Map();
+			Map map = new Map(frame);
 			frame.getContentPane().add(map);
-			
 			map.requestFocusInWindow();
 			frame.setVisible(true);
 		}
