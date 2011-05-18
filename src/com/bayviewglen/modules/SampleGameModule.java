@@ -33,15 +33,13 @@ public class SampleGameModule extends GamePanel {
 	
 	// handles termination and game-play keys
 	protected void processKeyPressed(KeyEvent e){
-		System.out.println("hi");
-		
+			
 		super.processKey(e);
 		int keyCode = e.getKeyCode();
 
 		// game-play keys
 		if (!isPaused() && !isGameOver()) {
 			if (keyCode == KeyEvent.VK_LEFT){
-				System.out.println("LEFT");
 				if (!player.isMoving()){
 					System.out.println("LEFT Start");
 					player.setMoving(true);
