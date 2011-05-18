@@ -1,5 +1,6 @@
 package com.bayviewglen.game;
 
+import com.bayviewglen.gameutils.ClipsLoader;
 import com.bayviewglen.gameutils.Direction;
 import com.bayviewglen.gameutils.ImagesLoader;
 import com.bayviewglen.gameutils.Sprite;
@@ -18,14 +19,16 @@ public class CharacterSprite extends Sprite{
 	private static final int YSTEP = 10;   
 	// step distance for moving along y-axis
 
-
+	private ClipsLoader clipsLoader;
+	
 	private int period;
 	/* in ms. The game's animation period used by the image
       cycling of the bat's left and right facing images. */
 
 	// Initialise the Character Sprite
-	public CharacterSprite(int w, int h, ImagesLoader imsLd, int p){ 
+	public CharacterSprite(int w, int h, ImagesLoader imsLd, int p, ClipsLoader clipsLoader){ 
 		super( w/2, h-FLOOR_DIST, w, h, imsLd, "walkingeast"); 
+		this.clipsLoader = clipsLoader;
 		period = p;
 		setStep(0,0);  // no movement
 	}
@@ -35,6 +38,7 @@ public class CharacterSprite extends Sprite{
 				
 		if (orientation == 1){
 			setImage("attacklow" + getDirectionString());
+			clipsLoader.play("hitRight", false);
 		}else if(orientation == 2){
 			setImage("attackhigh" + getDirectionString());
 		}

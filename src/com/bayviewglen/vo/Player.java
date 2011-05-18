@@ -6,6 +6,7 @@ package com.bayviewglen.vo;
 import java.io.Serializable;
 
 import com.bayviewglen.game.CharacterSprite;
+import com.bayviewglen.gameutils.ClipsLoader;
 import com.bayviewglen.gameutils.ImagesLoader;
 
 /**
@@ -27,9 +28,9 @@ public class Player extends HumanControlledCharacter implements Serializable{
 		exp += addedExp;
 	}
 
-	public Player(String playerName, int PWIDTH, int PHEIGHT, ImagesLoader imsLoader, long period){
+	public Player(String playerName, int PWIDTH, int PHEIGHT, ImagesLoader imsLoader, long period, ClipsLoader clipsLoader){
 		name = playerName;
-		setSprite(new CharacterSprite(PWIDTH, PHEIGHT, imsLoader, (int)(period/1000000L) )); // in ms
+		setSprite(new CharacterSprite(PWIDTH, PHEIGHT, imsLoader, (int)(period/1000000L), clipsLoader )); // in ms
 	}
 	
 

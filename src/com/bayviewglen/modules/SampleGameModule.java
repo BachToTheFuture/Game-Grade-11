@@ -1,8 +1,5 @@
 package com.bayviewglen.modules;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 
@@ -22,8 +19,8 @@ public class SampleGameModule extends GamePanel {
 		super(images, period);
 		
 		clipsLoader = new ClipsLoader(sounds);
-
-		player = new Player("HERO", PWIDTH, PHEIGHT, imsLoader, period);		
+		
+		player = new Player("HERO", PWIDTH, PHEIGHT, imsLoader, period, clipsLoader);		
 		parent = parentFrame;
 						
 		// load the background image	
