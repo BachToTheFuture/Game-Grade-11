@@ -14,7 +14,9 @@ o samplebackground.png
 // bat images
 s leftBugs2.gif 4
 s rightBugs2.gif 4
-s walkingleft.png 4
-s walkingright.png 4
-s attackhigh.png 3
-s attacklow.png 3
+s walkingwest.png 4
+s walkingeast.png 4
+s attackhigheast.png 3
+s attackloweast.png 3
+s attackhighwest.png 3
+s attacklowwest.png 3

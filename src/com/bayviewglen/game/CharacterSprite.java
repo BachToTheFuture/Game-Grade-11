@@ -1,5 +1,6 @@
 package com.bayviewglen.game;
 
+import com.bayviewglen.gameutils.Direction;
 import com.bayviewglen.gameutils.ImagesLoader;
 import com.bayviewglen.gameutils.Sprite;
 
@@ -17,42 +18,50 @@ public class CharacterSprite extends Sprite{
 	private static final int YSTEP = 10;   
 	// step distance for moving along y-axis
 
-	
+
 	private int period;
 	/* in ms. The game's animation period used by the image
       cycling of the bat's left and right facing images. */
 
 	// Initialise the Character Sprite
 	public CharacterSprite(int w, int h, ImagesLoader imsLd, int p){ 
-		super( w/2, h-FLOOR_DIST, w, h, imsLd, "walkingleft"); 
+		super( w/2, h-FLOOR_DIST, w, h, imsLd, "walkingeast"); 
 		period = p;
 		setStep(0,0);  // no movement
 	}
 	
 	//Begin an attack sequence for the character.
 	public void attack(int orientation){
+				
 		if (orientation == 1){
-			setImage("attacklow");
+			setImage("attacklow" + getDirectionString());
 		}else if(orientation == 2){
-			setImage("attackhigh");
+			setImage("attackhigh" + getDirectionString());
 		}
 			
 		loopImage(period, DURATION, false);   // cycle through the leftBugs2 images
 	}
 
+	private String getDirectionString() {
+		return Direction.getDirectionString(getDirection());
+	}
+
 	// start the Character moving left
 	public void moveLeft(){ 
 		setStep(-XSTEP, 0);
-		setImage("walkingleft");
+		setDirection(Direction.WEST);
+		setImage("walking" + getDirectionString());
 		loopImage(period, DURATION);   // cycle through the leftBugs2 images
 	}
 
 	// start the Character moving right
 	public void moveRight(){ 
 		setStep(XSTEP, 0); 
-		setImage("walkingright");
+		setDirection(Direction.EAST);
+		setImage("walking" + getDirectionString());
 		loopImage(period, DURATION);  // cycle through the images
 	}
+
 
 	// stop the character from moving
 	public void stayStill(){

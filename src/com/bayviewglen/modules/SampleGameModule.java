@@ -34,17 +34,7 @@ public class SampleGameModule extends GamePanel {
 		//setFocusable(true);
 		//requestFocus();    // the JPanel now has focus, so receives key events
 
-		addKeyListener( new KeyAdapter() {
-			public void keyPressed(KeyEvent e){
-				processKeyPressed(e);
-			}
-		});
 		
-		addKeyListener( new KeyAdapter() {
-			public void keyReleased(KeyEvent e){
-				processKeyReleased(e);
-			}
-		});
 		
 		// load the background image	
 		setBgImage(imsLoader.getImage("samplebackground"));
@@ -63,6 +53,7 @@ public class SampleGameModule extends GamePanel {
 					player.setMoving(true);
 					player.moveLeft();
 				}
+			
 			}
 			else if (keyCode == KeyEvent.VK_RIGHT){
 				if (!player.isMoving()){
@@ -70,12 +61,8 @@ public class SampleGameModule extends GamePanel {
 					player.moveRight();
 				}
 			}else if (keyCode == KeyEvent.VK_A){
-					//if (!player.isMoving()){
-						//player.setMoving(true);
 						player.attack(1);
 			}else if (keyCode == KeyEvent.VK_Z){
-					//if (!player.isMoving()){
-						//player.setMoving(true);
 						player.attack(2);
 			}
 		}

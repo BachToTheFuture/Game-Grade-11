@@ -52,6 +52,7 @@ public abstract class Character implements Serializable{
 
 	public void moveRight() {
 		sprite.moveRight();
+		
 	}
 	/** The items. */
 	private ArrayList<Item> items;
