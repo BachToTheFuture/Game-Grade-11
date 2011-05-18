@@ -5,10 +5,54 @@ package com.bayviewglen.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import com.bayviewglen.game.CharacterSprite;
 
 
 public abstract class Character implements Serializable{
+	
+	private CharacterSprite sprite;
+	
+	/**
+	 * @param sprite the sprite to set
+	 */
+	public void setSprite(CharacterSprite sprite) {
+		this.sprite = sprite;
+	}
+
+	/**
+	 * @return the sprite
+	 */
+	public CharacterSprite getSprite() {
+		return sprite;
+	}
+	
+	public boolean isMoving() {
+		return sprite.isMoving();
+	}
+
+	public void setMoving(boolean b) {
+		sprite.setMoving(b);
+		
+	}
+
+	public void attack(int orientation){
+		sprite.attack(orientation);
+	}
+	
+	public void moveLeft() {
+		sprite.moveLeft();
+		
+	}
+
+	public void stayStill() {
+		sprite.stayStill();
+		
+	}
+
+	public void moveRight() {
+		sprite.moveRight();
+	}
 	/** The items. */
 	private ArrayList<Item> items;
 	/**

@@ -5,7 +5,6 @@ package com.bayviewglen.vo;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.util.HashMap;
 
 public abstract class Item implements Serializable{
 

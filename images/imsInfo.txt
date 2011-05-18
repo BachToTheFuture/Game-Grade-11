@@ -9,8 +9,12 @@ o ball.gif
 
 // background image
 o bladerunner.jpg
+o samplebackground.png
 
 // bat images
 s leftBugs2.gif 4
 s rightBugs2.gif 4
-
+s walkingleft.png 4
+s walkingright.png 4
+s attackhigh.png 3
+s attacklow.png 3

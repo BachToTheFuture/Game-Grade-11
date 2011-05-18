@@ -3,6 +3,7 @@
  */
 package com.bayviewglen.windows;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,10 +30,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.bayviewglen.modules.SamplePanel;
+import com.bayviewglen.gameutils.MidisLoader;
+import com.bayviewglen.modules.Map;
+import com.bayviewglen.modules.SampleGameModule;
 import com.bayviewglen.vo.Game;
 
 /**
@@ -38,7 +42,7 @@ import com.bayviewglen.vo.Game;
  * @author bivanovic
  * 
  */
-public class GameGUI implements ActionListener, KeyListener, MouseListener, Serializable{
+public class GameGUI implements ActionListener, KeyListener, MouseListener, Serializable, WindowListener{
 
 	private Game game;
 	private static JMenuBar menuBar;
@@ -60,11 +64,18 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
 	private static JFrame frame;
-	//private static SamplePanel sp;
+	
+	private static final String IMAGE_PATH = "./Images/imsInfo.txt";
+	private static final String SOUND_PATH = "clipsInfo.txt";
+
+	private static int DEFAULT_FPS = 20; 
+	
+	private SampleGameModule sampleGamePanel;        // where the game is drawn
+	private MidisLoader midisLoader;
+	private long PERIOD = (long) 1000.0/DEFAULT_FPS*1000000L;
 
 	private GameGUI(){
 		frame = new JFrame("Game Title");
-		//sp = new SamplePanel();
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize().getSize();
@@ -74,7 +85,6 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 		frame.addKeyListener(this);
 		frame.addMouseListener(this);
-		//frame.add(sp);
 		frame.setVisible(true);
 	}
 
@@ -227,14 +237,30 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-
+		
 		if (key == KeyEvent.VK_0){
-			SamplePanel sp = new SamplePanel();
-			frame.getContentPane().add(sp);
-			
-			// If you do not include this then you will not be able perform input in the panel.
-			sp.requestFocusInWindow();
-			// You need this to be able to update the frame with the panel
+			// load the background MIDI sequence
+			midisLoader = new MidisLoader();
+			midisLoader.load("br", "blade_runner.mid");
+			midisLoader.play("br", true);   // repeatedly play it
+
+			Container c = frame.getContentPane();    // default BorderLayout used
+			try {
+				sampleGamePanel = new SampleGameModule(this, PERIOD, new FileInputStream(new File(IMAGE_PATH)), SOUND_PATH);
+			} catch (FileNotFoundException ex) {
+				ex.printStackTrace();
+			}
+			c.add(sampleGamePanel);
+			sampleGamePanel.requestFocus();
+			frame.addWindowListener( this );
+			frame.setResizable(false);
+			frame.setVisible(true);
+		}
+		
+		else if (key == KeyEvent.VK_M){
+			Map map = new Map(frame);
+			frame.getContentPane().add(map);
+			map.requestFocusInWindow();
 			frame.setVisible(true);
 		}
 	}
@@ -303,6 +329,33 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		}
 	}
 
+	public void windowActivated(WindowEvent e){
+		sampleGamePanel.resumeGame();  
+	}
+
+	public void windowDeactivated(WindowEvent e){
+		sampleGamePanel.pauseGame();  
+	}
+
+
+	public void windowDeiconified(WindowEvent e){
+		sampleGamePanel.resumeGame();  
+	}
+
+	public void windowIconified(WindowEvent e){
+		sampleGamePanel.pauseGame();
+	}
+
+
+	public void windowClosing(WindowEvent e){
+		sampleGamePanel.stopGame();  
+		midisLoader.close();  // not really required
+	}
+
+
+	public void windowClosed(WindowEvent e) {}
+	public void windowOpened(WindowEvent e) {}
+	
 	public static void main(String[] args) {
 		GameGUI frame = new GameGUI();
 	}
