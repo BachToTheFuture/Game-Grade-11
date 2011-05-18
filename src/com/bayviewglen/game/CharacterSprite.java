@@ -42,10 +42,6 @@ public class CharacterSprite extends Sprite{
 		loopImage(period, DURATION, false);   // cycle through the leftBugs2 images
 	}
 
-	private String getDirectionString() {
-		return Direction.getDirectionString(getDirection());
-	}
-
 	// start the Character moving left
 	public void moveLeft(){ 
 		setStep(-XSTEP, 0);
@@ -70,7 +66,11 @@ public class CharacterSprite extends Sprite{
 		setMoving(false);
 	}
 
-	// have the bat wrap-around at the walls
+	private String getDirectionString() {
+		return Direction.getDirectionString(getDirection());
+	}
+	
+	// have the character wrap-around at the walls
 	public void updateSprite(){
 		if ((locx+getWidth() <= 0) && (dx < 0))   // almost gone off lhs
 			locx = getPWidth()-1;      // make it just visible on the right

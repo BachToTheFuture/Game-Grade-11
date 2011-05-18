@@ -18,24 +18,14 @@ public class SampleGameModule extends GamePanel {
 	private Player player;
 		
 	
-	public SampleGameModule(GameGUI br, long period, FileInputStream images, String sounds)	{
-		super(images);
+	public SampleGameModule(GameGUI parentFrame, long period, FileInputStream images, String sounds)	{
+		super(images, period);
 		
 		clipsLoader = new ClipsLoader(sounds);
 
 		player = new Player("HERO", PWIDTH, PHEIGHT, imsLoader, period);		
-		parent = br;
-		this.setPeriod(period);
-		
-		setDoubleBuffered(false);
-		setBackground(Color.black);
-		setPreferredSize( new Dimension(PWIDTH, PHEIGHT));
-
-		//setFocusable(true);
-		//requestFocus();    // the JPanel now has focus, so receives key events
-
-		
-		
+		parent = parentFrame;
+						
 		// load the background image	
 		setBgImage(imsLoader.getImage("samplebackground"));
 		sprites.add(player.getSprite());
@@ -43,13 +33,17 @@ public class SampleGameModule extends GamePanel {
 	
 	// handles termination and game-play keys
 	protected void processKeyPressed(KeyEvent e){
+		System.out.println("hi");
+		
 		super.processKey(e);
 		int keyCode = e.getKeyCode();
 
 		// game-play keys
 		if (!isPaused() && !isGameOver()) {
 			if (keyCode == KeyEvent.VK_LEFT){
+				System.out.println("LEFT");
 				if (!player.isMoving()){
+					System.out.println("LEFT Start");
 					player.setMoving(true);
 					player.moveLeft();
 				}
@@ -80,5 +74,5 @@ public class SampleGameModule extends GamePanel {
 				player.stayStill();
 			
 		}
-	}  // end of processKey()
+	}
 }
