@@ -64,12 +64,12 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 	private final static int MENU_HELP = 0;
 	private final static int MENU_ABOUT = 1;
 	private static JFrame frame;
-	
+
 	private static final String IMAGE_PATH = "./Images/imsInfo.txt";
 	private static final String SOUND_PATH = "clipsInfo.txt";
 
 	private static int DEFAULT_FPS = 20; 
-	
+
 	private SampleGameModule sampleGamePanel;        // where the game is drawn
 	private MidisLoader midisLoader;
 	private long PERIOD = (long) 1000.0/DEFAULT_FPS*1000000L;
@@ -203,6 +203,8 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 		if (ret == JFileChooser.APPROVE_OPTION) {
 			filename = fileopen.getSelectedFile().getAbsolutePath();
 		}
+		else
+			return null;
 
 		if (!(filename.endsWith(".sav"))){
 			Object[] options = {"Ok"};
@@ -237,7 +239,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
-		
+
 		if (key == KeyEvent.VK_0){
 			// load the background MIDI sequence
 			midisLoader = new MidisLoader();
@@ -256,7 +258,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 			frame.setResizable(false);
 			frame.setVisible(true);
 		}
-		
+
 		else if (key == KeyEvent.VK_M){
 			Map map = new Map(frame);
 			frame.getContentPane().add(map);
@@ -301,11 +303,24 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 		else if("Load".equalsIgnoreCase(e.getActionCommand())){
 			if(game != null){
-				//If game is not null, ask the user if they are sure as any unsaved
-				//data will be lost.
+				Object[] options = {"Save, then Load", "Load", "Cancel"};
+				int n = JOptionPane.showOptionDialog(frame,	"Are you sure you want to load?\nAny unsaved data will be lost!", "", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+
+				if(n == 0){
+					save(game);
+					game = load();
+				}
+
+				else if(n == 1){
+					game = load();
+				}
+
+				else if(n == 2)
+					return;
 			}
 
-			game = load();
+			else
+				game = load();
 		}
 
 		else if("New Game".equalsIgnoreCase(e.getActionCommand())){
@@ -355,7 +370,7 @@ public class GameGUI implements ActionListener, KeyListener, MouseListener, Seri
 
 	public void windowClosed(WindowEvent e) {}
 	public void windowOpened(WindowEvent e) {}
-	
+
 	public static void main(String[] args) {
 		GameGUI frame = new GameGUI();
 	}
