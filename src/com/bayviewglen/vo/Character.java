@@ -36,7 +36,7 @@ public abstract class Character implements Serializable{
 		
 	}
 
-	public void attack(int orientation){
+	public void attack(Integer orientation){
 		sprite.attack(orientation);
 	}
 	
