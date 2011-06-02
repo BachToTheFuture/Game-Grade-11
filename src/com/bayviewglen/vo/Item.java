@@ -12,6 +12,7 @@ public abstract class Item implements Serializable{
 	/** The item name. */
 	private BufferedImage itemImage;
 	private String itemName; 
+	private int value;
 
 	/** The weight. */
 	int weight = 0;
@@ -106,5 +107,9 @@ public abstract class Item implements Serializable{
 	 */
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public int getValue() {
+		return value;
 	}
 }
